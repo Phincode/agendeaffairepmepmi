@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AppAccess;
 use App\Http\Controllers\decisionFinancement;
 use App\Http\Controllers\soucriptionDossier;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +17,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home/index');
-})->name('home');
 
-Route::group(['prefix'=>'/souscriptionDossier'],function(){
-    Route::get('/index',[soucriptionDossier::class,'index'])->name('souscriptionDossier');
-} 
-);
+Route::group(['middleware'=>['web']],function(){
 
-Route::group(['prefix'=>'/decisionFinancement'],function(){
-    Route::get('/index',[decisionFinancement::class,'index'])->name('decisionFinancement');
-} 
-);
+    Route::get('/', function () {
+        return view('home/index');
+    })->name('home');
+
+
+    Route::group(['prefix'=>'/souscriptionDossier'],function(){
+         Route::get('/index',[soucriptionDossier::class,'index'])->name('souscriptionDossier');
+    });
+
+    Route::group(['prefix'=>'/decisionFinancement'],function(){
+         Route::get('/index',[decisionFinancement::class,'index'])->name('decisionFinancement');
+    });
+
+    Route::group(['prefix'=>'connexion'],function(){
+        Route::get('/index',[AppAccess::class,'connexionview'])->name('loginview');
+         Route::post('/index',[AppAccess::class,'connexion'])->name('connecte');
+    });
+
+    Route::group(['middleware'=>'auth'],function(){
+        Route::group(['prefix'=>'/dashboard'],function(){
+        Route::get('/index',[Dashboard::class,'index'])->name('dashboardView');
+        });
+
+    });
+
+
+    
+   
+
+});

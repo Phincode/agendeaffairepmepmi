@@ -2,57 +2,14 @@
 <html lang="en-us">
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Brainstormingci">
-    <meta name="author" content="Brainstormingci">
-    <link rel="shortcut icon" href="favicon.ico">
-    <title>AGENCE AFFAIRE</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" async defer>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" async defer>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.8.2/venobox.css" async defer>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" async defer>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" async defer>
-    <link rel="stylesheet" href="{{asset('home/css/style.css')}}" async defer>
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+   @include('layout.partial.header')
 </head>
 
 <body>
     <div class="loader">
         <div class="loading"></div>
     </div>
-    <div id="navbar-top">
-        <nav class="navbar navbar-expand-md navbar-light bg-white fixed">
-            <div class="container">
-                <a class="navbar-brand nav-external" href=" {{route('home')}} ">AGENCE AFFAIRE</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Connexion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Nos services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Apropos de nous</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Nous contacter</a>
-                        </li>
-                    </ul>
-                    
-                </div>
-            </div>
-        </nav>
-    </div>
+    @include('layout.partial.menu')
 
    @yield('menuoption')
    
