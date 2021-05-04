@@ -41,7 +41,17 @@ Route::group(['middleware'=>['web']],function(){
     Route::group(['middleware'=>'auth'],function(){
         Route::group(['prefix'=>'/dashboard'],function(){
         Route::get('/index',[Dashboard::class,'index'])->name('dashboardView');
-        });
+        Route::post('/addpme',[Dashboard::class,'addPme'])->name('addPME');
+        Route::post('/addpmedossiers',[Dashboard::class,'addDossier'])->name('adDossier');
+        Route::get('/ranlyste/{iddossier?}',[Dashboard::class,'ranalystecreate'])->name('rAnalyste');
+        Route::get('/anlyste',[Dashboard::class,'analystecreate'])->name('analyste');
+        Route::post('/transfertdossieranalyste}',[Dashboard::class,'ranalysteTransfert'])->name('transfertDossierAnalyste');
+        Route::post('/scoring}',[Dashboard::class,'scorepme'])->name('scoring');
+        Route::get('/retourAnalyste}',[Dashboard::class,'retourAnalysteCreate'])->name('retourAnalyste');
+
+
+
+     });
 
     });
 

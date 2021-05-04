@@ -30,6 +30,12 @@ class AppAccess extends Controller
                 case 'AG':
                      return redirect('dashboard/index');
                     break;
+                case 'RAN':
+                    return redirect('dashboard/index');
+                       break;
+                case 'AS':
+                    return redirect('dashboard/index');
+                       break;           
             }
 
         }else{

@@ -9,9 +9,9 @@
                  <li class="submenu">
                     <a href="#"><i class="la la-dashboard"></i> <span>Dossiers</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a class="active" href="index.html">Nouveau Dossier</a></li>
-                        <li><a href="employee-dashboard.html">Soumettre un dossier</a></li>
-                        <li><a href="employee-dashboard.html">Retour Analyste</a></li>
+                        <li><a class="" data-toggle="modal" data-target="#add_leave" href="#">Ajouter une pme</a></li>
+                        <li><a data-toggle="modal" data-target="#add_dossier" href="#">Soumettre un dossier</a></li>
+                        <li><a href="{{route('retourAnalyste')}} ">Retour Analyste</a></li>
                         <li><a href="employee-dashboard.html">Retour Commité de décision</a></li>
                         <li><a href="employee-dashboard.html">Retour Financement</a></li>
                         <li><a href="employee-dashboard.html">Dossier rejetés</a></li>
@@ -45,7 +45,7 @@
                 <li class="submenu">
                     <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Chef Analyste</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="employees.html">Dossiers</a></li>
+                        <li><a href="{{route('rAnalyste')}}">Dossiers</a></li>
                         {{-- <li><a href="holidays.html">Holidays</a></li> --}}
                         {{-- <li><a href="leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li> --}}
                     </ul>
@@ -55,8 +55,8 @@
                   <li class="submenu">
                     <a href="#" class="noti-dot"><i class="la la-user"></i> <span>Analyste</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="employees.html">Nouveau Dossier</a></li>
-                        <li><a href="holidays.html">Dossier à revoir</a></li>
+                        <li><a href="{{route('analyste')}} ">Dossiers</a></li>
+                        {{-- <li><a href="holidays.html">Dossier à revoir</a></li> --}}
                     </ul>
                  </li>
                   @endif

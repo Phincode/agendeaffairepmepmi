@@ -5,6 +5,8 @@
 <script src="{{asset('dashboard/js/popper.min.js')}} "></script>
 <script src="{{asset('dashboard/js/bootstrap.min.js')}}"></script>
 
+<script src="{{asset('dashboard/js/select2.min.js')}}"></script>
+
 <!-- Slimscroll JS -->
 <script src="{{asset('dashboard/js/jquery.slimscroll.min.js')}}"></script>
 

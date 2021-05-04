@@ -1,3 +1,31 @@
+@php
+    use Illuminate\Support\Str;
+    $uuid = Str::uuid()->toString();
+@endphp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @extends('layout.dashboard.dash')
@@ -16,7 +44,7 @@
         </div>
     </div>
     <!-- /Page Header -->
-
+{{-- 
     <div class="row">
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
@@ -721,7 +749,139 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>
+
+<!-- toast-->
+ 
+
+  @if (session()->has('succes'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Succes</strong>  {{session()->get('succes')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+   @endif
+
+   @if ($errors->has('files'))
+            @foreach ($errors->get('files') as $error)
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $error }}</strong>
+            </span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @endforeach
+   @endif
+
+<!-- Add entreprise Modal -->
+<div id="add_leave" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter une PME</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{route('addPME')}} ">
+                    @csrf
+                    <div class="form-group">
+                        <label>Type PME <span class="text-danger">*</span></label>
+                        <select name="typePme" class="select">
+                            <option>Sélectionner un type</option>
+                            @foreach ($pmeTypeList as $item)
+                            <option value="{{$item->id}} ">{{$item->nom}}</option>
+                            @endforeach
+                           
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom Pme <span class="text-danger">*</span></label>
+                        <input name="nom" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom propriétaire <span class="text-danger">*</span></label>
+                        <input name="nomProprietaire" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Email propriétaire <span class="text-danger">*</span></label>
+                        <input name="emailProprietaire" class="form-control" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Numéro de téléphone propriétaire <span class="text-danger">*</span></label>
+                        <input name="numeroProprietaire" class="form-control"  type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom Gérant <span class="text-danger">*</span></label>
+                        <input name="nomGerant" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Gérant <span class="text-danger">*</span></label>
+                        <input name="emailGerant" class="form-control" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Numéro de téléphone gérant <span class="text-danger">*</span></label>
+                        <input name="numeroGerant" class="form-control"  type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Activité <span class="text-danger">*</span></label>
+                        <input name="activite" class="form-control"  type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Date création <span class="text-danger">*</span></label>
+                        <div class="cal-icon">
+                            <input name="dateCreation" type="date" class="form-control datetimepicker"  type="text">
+                        </div>    
+                    </div>
+                    <input name="filledUserId" type="hidden" class="form-control datetimepicker" value="{{Auth::user()->id}} "  type="text">
+                    <input name="codePme" type="hidden" class="form-control datetimepicker" value="{{$uuid}} "  type="text">
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add entreprise Modal -->
+
+<!-- Add dossier Modal -->
+<div id="add_dossier" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Soumettre un dossier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{route('adDossier')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label>PME <span class="text-danger">*</span></label>
+                        <select name="Pme" class="select">
+                            <option>Sélectionner une PME</option>
+                            @foreach ($pmeList as $item)
+                            <option value="{{$item->id}} ">{{$item->nom}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Chargez les fichiers <span class="text-danger">*</span></label>
+                        <input type="file"  name="filenames[]" multiple  class="form-control">
+                    </div>
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add entreprise dossier Modal -->
 @endsection
