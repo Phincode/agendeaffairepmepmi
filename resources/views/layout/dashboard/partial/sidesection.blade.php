@@ -12,9 +12,9 @@
                         <li><a class="" data-toggle="modal" data-target="#add_leave" href="#">Ajouter une pme</a></li>
                         <li><a data-toggle="modal" data-target="#add_dossier" href="#">Soumettre un dossier</a></li>
                         <li><a href="{{route('retourAnalyste')}} ">Retour Analyste</a></li>
-                        <li><a href="employee-dashboard.html">Retour Commité de décision</a></li>
-                        <li><a href="employee-dashboard.html">Retour Financement</a></li>
-                        <li><a href="employee-dashboard.html">Dossier rejetés</a></li>
+                        {{-- <li><a href="employee-dashboard.html">Retour Commité de décision</a></li> --}}
+                        <li><a href="#">Retour Financement</a></li>
+                        <li><a href="#">Dossier rejetés</a></li>
                     </ul>
                  </li>
                  @endif
@@ -88,16 +88,14 @@
                     </ul>
                 </li>
                 @endif
-                @if (Auth::user()->hasrole('AAD')|| Auth::user()->hasrole('AG'))
+                {{-- @if (Auth::user()->hasrole('Banque')|| Auth::user()->hasrole('AG'))
                 <li class="submenu">
-                    <a href="#"><i class="la la-files-o"></i> <span> Suivie Entreprise </span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="la la-user"></i> <span> Partenaires externe</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="estimates.html">Etat remboursements</a></li>
-                        <li><a href="invoices.html">Performance</a></li>
-                        <li><a href="payments.html">Avis</a></li>
+                        <li><a href="{{route('dashboardBank')}} ">Dossiers</a></li>
                     </ul>
                 </li>
-                @endif
+                @endif --}}
                 {{-- <li class="submenu">
                     <a href="#"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">

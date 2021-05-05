@@ -24,11 +24,11 @@
                 <a href="{{route('rAnalyste',['iddossier'=>$Pme->id])}} " class="btn btn-primary submit-btn" >Voir le dossier</a>
             </div>
             
-            <form action="" method="post">
+           
                 <div class="submit-section">
-                    <Button type="submit" class="btn btn-primary submit-btn" >Envoie Banque</Button>
+                    <Button onclick="getpmeId({{$Pme->pmeId}})" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
-            </form>
+            
             <form action="" method="post">
                 <div class="submit-section">
                     <Button type="submit" class="btn btn-primary submit-btn" >Retourner</Button>
@@ -45,34 +45,34 @@
     
 </div>
 
-{{-- <!-- scoring Modal -->
-<div id="deleguer" class="modal custom-modal fade" role="dialog">
+<!-- partenanire Modal -->
+<div id="partenaire" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Scorer le dossier</h5>
+                <h5 class="modal-title">Choisir le partenanaire</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{route('transfertDossierAnalyste')}}">
+                <form method="POST" action="{{route('sendTobank')}}">
                     @csrf
                     <div class="form-group">
-                        <label>Analyste <span class="text-danger">*</span></label>
-                        <select name="score" class="select">
-                            <option>Sélectionner une mention</option>
-                            <option value="Excellent">Excellent</option>
-                            <option value="Acceptable">Acceptable</option>
-                            <option value="Mauvais">Mauvais</option>
+                        <label>Banque <span class="text-danger">*</span></label>
+                        <select name="bankid" class="select">
+                            <option>Sélectionner un partenanire financié</option>
+                            @foreach ($Banks as $item)
+                              <option value="{{$item->id}} ">{{$item->name}} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Laissez une observation <span class="text-danger">*</span></label>
                         <input type="text"  name="observation"   class="form-control">
                     </div>
-                    <input type="hidden"  name="pmeId" value="{{$currentPme}} "   class="form-control">
-                    <input type="hidden"  name="analysteId" value="{{Auth::user()->id}} "   class="form-control">
+                    <input type="hidden" id="pmId" name="pmId" value="" class="form-control">
+                    <input type="hidden"  name="from" value="{{Auth::user()->id}} "   class="form-control">
                     <div class="submit-section">
                         <button type="submit" class="btn btn-primary submit-btn">Valider</button>
                     </div>
@@ -81,5 +81,12 @@
         </div>
     </div>
 </div>
-<!-- /scoring Modal --> --}}
+<!-- /partenaire Modal -->
+
+<script>
+     function getpmeId(id){
+        $('#pmId').val(id.toString());
+        console.log(id);
+    }   
+</script>
 @endsection

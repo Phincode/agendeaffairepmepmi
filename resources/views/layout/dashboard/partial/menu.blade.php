@@ -19,7 +19,7 @@
     
     <!-- Header Title -->
     <div class="page-title-box">
-        <h3>AGENCE D'AFFAIRE</h3>
+       <a href="{{route('dashboardView')}} "> <h3>AGENCE D'AFFAIRE</h3></a>
     </div>
     <!-- /Header Title -->
     

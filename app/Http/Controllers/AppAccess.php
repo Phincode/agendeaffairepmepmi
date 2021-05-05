@@ -35,7 +35,10 @@ class AppAccess extends Controller
                        break;
                 case 'AS':
                     return redirect('dashboard/index');
-                       break;           
+                       break;
+                case 'Banque':
+                    return redirect('dashboard/index');
+                        break;                  
             }
 
         }else{

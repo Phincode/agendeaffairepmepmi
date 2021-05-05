@@ -48,6 +48,10 @@ Route::group(['middleware'=>['web']],function(){
         Route::post('/transfertdossieranalyste}',[Dashboard::class,'ranalysteTransfert'])->name('transfertDossierAnalyste');
         Route::post('/scoring}',[Dashboard::class,'scorepme'])->name('scoring');
         Route::get('/retourAnalyste}',[Dashboard::class,'retourAnalysteCreate'])->name('retourAnalyste');
+        route::post('/transfertBanque',[Dashboard::class,'sendToBank'])->name('sendTobank');
+        route::get('/dashboardBank/{iddossier?}',[Dashboard::class,'partenairecreate'])->name('dashboardBank');
+        route::post('/decisionBanque',[Dashboard::class,'decisionBanque'])->name('decisionBanque');
+
 
 
 

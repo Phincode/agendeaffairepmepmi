@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\DocTransfertdRequest;
 use App\Models\PmeScoring;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SendToBankRequest;
 
 class Dashboard extends Controller
 {
@@ -173,8 +174,72 @@ class Dashboard extends Controller
                                      ->join('pmes','pmes.id','=','pme_scorings.pmeId')
                                      ->join('users','users.id','=','pme_scorings.analysteId')         
                                      ->get();
-       // dd($myFiles->first);
-        return view('dashboard.retourAnalyste',['pmeDossiers'=>$myFiles]);
+        //var_dump($myFiles->first->pmeId);
+
+       //séléct bank
+       $bank=User::select()->where('role_id',4)->get();
+       return view('dashboard.retourAnalyste',['pmeDossiers'=>$myFiles,'Banks'=>$bank]);
+
+    }
+
+    public function sendToBank(SendToBankRequest $request){
+
+        $data=$request->validated();
+        //dd($data);
+        //dd($data);
+
+        $check=DossierPmeTransfert::select()->where('pmeId',$data['pmId'])->get();
+        
+        if(sizeof($check)==0){
+            $transfert=new DossierPmeTransfert();
+            $transfert->to=0;
+            $transfert->pmeId=$data['pmId'];
+            $transfert->from=0;
+            $transfert->etape=3;
+            $transfert->Observation='RAS';
+            $transfert->save();
+        }
+       // dd($data['pmId']);
+    
+        $a=DossierPmeTransfert::where('pmeId',$data['pmId'])
+                              ->update(['from'=>$data['from'],'to'=>$data['bankid'],'Observation'=>$data['observation']]);
+       
+        $b=DossierPme::where('pmeId',$data['pmId'])
+                              ->update(['etat'=>'ANALYSE3','validation'=>4]);
+       
+        $c=PmeScoring::where('pmeId',$data['pmId'])
+                    ->update(['Observation'=>'BANQUE']);
+        
+        return back()->with('succes','Dossier transmis au partenaire!');            
+
+
+    }
+
+
+    public function partenairecreate(Request $request){
+
+        $userId=Auth::user()->id;
+
+        //get transfert pme to analyse
+        $pmeList=DossierPmeTransfert::select()->where('to',$userId)
+                                    ->where('etape',4)
+                                    ->join('pmes','pmes.id','=','dossier_pme_transferts.pmeId')
+                                    ->get();        
+        $pmeFiles=Array();
+        if($request->iddossier!=null){
+            
+            $iddossier=intval($request->iddossier);
+            array_push($pmeFiles,DossierPme::select()->Where('pmeId',$iddossier)->get());
+            $pmeName=Pme::select('nom')->where('id', $iddossier)->first();
+            return view('dashboard.banqueAnalyse',['listPmetoScore'=>$pmeList,'pmeFiles'=>$pmeFiles[0],'currentPme'=>intval($request->iddossier),'currentPmeName'=>$pmeName->nom]);
+
+        }
+        //dd($request->iddossier);
+        //dd($pmeFiles[0]);
+
+        return view('dashboard.banqueAnalyse',['listPmetoScore'=>$pmeList,'pmeFiles'=>[],'currentPme'=>0,'currentPmeName'=>""]);
+
+
     }
 
 

@@ -22,11 +22,11 @@
                 <a href="<?php echo e(route('rAnalyste',['iddossier'=>$Pme->id])); ?> " class="btn btn-primary submit-btn" >Voir le dossier</a>
             </div>
             
-            <form action="" method="post">
+           
                 <div class="submit-section">
-                    <Button type="submit" class="btn btn-primary submit-btn" >Envoie Banque</Button>
+                    <Button onclick="getpmeId(<?php echo e($Pme->pmeId); ?>)" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
-            </form>
+            
             <form action="" method="post">
                 <div class="submit-section">
                     <Button type="submit" class="btn btn-primary submit-btn" >Retourner</Button>
@@ -43,6 +43,49 @@
     
 </div>
 
+<!-- partenanire Modal -->
+<div id="partenaire" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Choisir le partenanaire</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="<?php echo e(route('sendTobank')); ?>">
+                    <?php echo csrf_field(); ?>
+                    <div class="form-group">
+                        <label>Banque <span class="text-danger">*</span></label>
+                        <select name="bankid" class="select">
+                            <option>Sélectionner un partenanire financié</option>
+                            <?php $__currentLoopData = $Banks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <option value="<?php echo e($item->id); ?> "><?php echo e($item->name); ?> </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Laissez une observation <span class="text-danger">*</span></label>
+                        <input type="text"  name="observation"   class="form-control">
+                    </div>
+                    <input type="hidden" id="pmId" name="pmId" value="" class="form-control">
+                    <input type="hidden"  name="from" value="<?php echo e(Auth::user()->id); ?> "   class="form-control">
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /partenaire Modal -->
 
+<script>
+     function getpmeId(id){
+        $('#pmId').val(id.toString());
+        console.log(id);
+    }   
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layout.dashboard.dash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/Ampps/www/agendeaffairepmepmi/resources/views/dashboard/retourAnalyste.blade.php ENDPATH**/ ?>
