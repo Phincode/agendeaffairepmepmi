@@ -7,6 +7,7 @@ use App\Models\TypePme;
 use App\Http\Requests\AddPmeRequest;
 use App\Http\Requests\AddPmeFilesRequest;
 use App\Http\Requests\ScorePmeRequest;
+use App\Http\Requests\AddDossier;
 
 use App\Models\DossierPme;
 use App\Models\Pme;
@@ -19,6 +20,10 @@ use App\Http\Requests\DocTransfertdRequest;
 use App\Models\PmeScoring;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SendToBankRequest;
+use App\Models\DossierGeneral;
+use App\Models\FichierDossierGeneral;
+use Illuminate\Support\Facades\Date;
+use App\Models\Rdvs;
 
 class Dashboard extends Controller
 {
@@ -52,6 +57,8 @@ class Dashboard extends Controller
             $pme->codePme=$data['codePme'];
             $pme->typePme=$data['typePme'];
             $pme->filledUserId=$data['filledUserId'];
+            $pme->besoinenfinancement=$data['besoin'];
+            $pme->localisation=$data['localisation'];
             $pme->save();
             return back()->with('succes','Pme Enregistrée avec succès!');
     }
@@ -86,6 +93,42 @@ class Dashboard extends Controller
         return back()->with('succes','dossier ajouté!');
 
     }
+
+    public function addDossierbyAnalyste(AddDossier $file)
+    {
+        $data=$file->validated();
+        //dd($data);
+        $images = $data['filenames'];
+        $dossierName=$data['nomDossier'];
+        $observation=$data['observations'];
+        //create dossier
+        //store
+        $dossier=new DossierGeneral();
+        $dossier->nom=$dossierName;
+        $dossier->transmission='AG';
+        $dossier->etat='PENDING';
+        $dossier->analysteName=Auth::user()->name;
+        $dossier->observations=$observation;
+        $dossier->save();
+        $idDossier=DossierGeneral::select()->orderBy('id','desc')->first()->id;
+
+        //$npme=$req->nom;
+        foreach($images as $image) {
+            $name = time().'_'.$image->getClientOriginalName();
+            $path = $image->storeAs('uploads/'.$dossierName, $name, 'public');
+            $path2=Storage::url($path);
+              $fichiers= new FichierDossierGeneral();
+              $fichiers->idDossier=$idDossier;
+              $fichiers->nomFichier=$image->getClientOriginalName();
+              $fichiers->pathFichier=$path2;
+              $fichiers->save();
+            //var_dump($path2);
+        }
+        return back()->with('succes','dossier ajouté!');
+
+    }
+
+
 
     public function ranalystecreate(Request $request)
     {
@@ -123,6 +166,30 @@ class Dashboard extends Controller
 
     }
 
+    public function dossierGeneral(Request $request)
+    {
+        //get pme to score
+        $dossier=DossierGeneral::select()    
+                                        ->where('transmission','AS')
+                                        ->get();        
+        $dossierFiles=Array();
+        if($request->iddossier!=null){
+            $iddossier=intval($request->iddossier);
+            array_push($dossierFiles,FichierDossierGeneral::select()->Where('idDossier',$iddossier)->get());
+            $dossierName=DossierGeneral::select('nom')->where('id', $iddossier)->first();
+            return view('dashboard.dossierRetourner',['listDossier'=>$dossier,'dossierFiles'=>$dossierFiles[0],'currentDossier'=>intval($request->iddossier),'currentdossierName'=>$dossierName->nom]);
+        }
+        
+        //dd($request->iddossier);
+        //dd($pmeFiles[0]);
+
+        return view('dashboard.dossierRetourner',['listDossier'=>$dossier,'dossierFiles'=>[],'currentDossier'=>0,'currentdossierName'=>'']);
+
+    }
+
+
+
+
     public function ranalysteTransfert(DocTransfertdRequest $request)
     {
         $data=$request->validated();
@@ -133,7 +200,7 @@ class Dashboard extends Controller
         $transfert->etape=3;
         $transfert->Observation=$data['observation'];
         $transfert->save();
-        return back()->with('succes','Dossier Partagé avec succès');
+        return redirect('/dashboard/index');
     }
 
     public function analystecreate(Request $request)
@@ -163,7 +230,8 @@ class Dashboard extends Controller
         DossierPmeTransfert::where('pmeId',$data['pmeId'])  
                                     ->update(['etape'=>4]);                          
         
-        return back()->with('succes','Pme scoré avec succés!');
+        return redirect('/dashboard/index');
+
 
     }
 
@@ -171,6 +239,8 @@ class Dashboard extends Controller
     {
         $myId=Auth::user()->id;
         $myFiles=PmeScoring::select()->where('Observation','!=','BANQUE')
+                                    ->Where('Observation','not like','%ACCORD_FINANCEMENT%')
+                                    ->Where('Observation','not like','%REFUS_FINANCEMENT%')
                                      ->join('pmes','pmes.id','=','pme_scorings.pmeId')
                                      ->join('users','users.id','=','pme_scorings.analysteId')         
                                      ->get();
@@ -179,6 +249,36 @@ class Dashboard extends Controller
        //séléct bank
        $bank=User::select()->where('role_id',4)->get();
        return view('dashboard.retourAnalyste',['pmeDossiers'=>$myFiles,'Banks'=>$bank]);
+
+    }
+
+    public function retourBanqueCreate(Request $request)
+    {
+        $myId=Auth::user()->id;
+        $myFiles=PmeScoring::select()->where('Observation','LIKE','%ACCORD_FINANCEMENT%')
+                                     ->join('pmes','pmes.id','=','pme_scorings.pmeId')
+                                     ->join('users','users.id','=','pme_scorings.analysteId')         
+                                     ->get();
+       // dd($myFiles->first->pmeId);
+
+       //séléct bank
+       $bank=User::select()->where('role_id',4)->get();
+       return view('dashboard.retourBanque',['pmeDossiers'=>$myFiles,'Banks'=>$bank]);
+
+    }
+
+    public function retourBanqueRejet(Request $request)
+    {
+        $myId=Auth::user()->id;
+        $myFiles=PmeScoring::select()->where('Observation','LIKE','%REFUS_FINANCEMENT%')
+                                     ->join('pmes','pmes.id','=','pme_scorings.pmeId')
+                                     ->join('users','users.id','=','pme_scorings.analysteId')         
+                                     ->get();
+        //var_dump($myFiles->first->pmeId);
+
+       //séléct bank
+       $bank=User::select()->where('role_id',4)->get();
+       return view('dashboard.dossierRejete',['pmeDossiers'=>$myFiles,'Banks'=>$bank]);
 
     }
 
@@ -210,7 +310,7 @@ class Dashboard extends Controller
         $c=PmeScoring::where('pmeId',$data['pmId'])
                     ->update(['Observation'=>'BANQUE']);
         
-        return back()->with('succes','Dossier transmis au partenaire!');            
+                    return redirect('/dashboard/index');
 
 
     }
@@ -240,6 +340,64 @@ class Dashboard extends Controller
         return view('dashboard.banqueAnalyse',['listPmetoScore'=>$pmeList,'pmeFiles'=>[],'currentPme'=>0,'currentPmeName'=>""]);
 
 
+    }
+
+    public function rdvListCreate(Request $request)
+    {
+        $liste=Array();
+        
+        if($request->date!=null){
+            //dd($request->date);
+            $time = strtotime($request->date);
+            $date = date('Y-m-d',$time);
+            //dd($request->date);
+            $data=Rdvs::select()->where('state','=','PENDING')
+            ->where('dateRdv','=',  $date)
+            ->Where('rdvs.clientSimpleDcId','!=',null)
+            ->join('client_s_d_c_s','client_s_d_c_s.id','=','rdvs.clientSimpleDcId')
+            ->get();
+
+            $data1=Rdvs::select()->where('state','=','PENDING')
+            ->where('dateRdv','=', $date)
+            ->where('rdvs.pmeId','!=',null)
+            ->join('pmes','pmes.id','=','rdvs.pmeId')
+            ->get();
+            array_push($liste,$data);
+            array_push($liste,$data1);
+            return view('dashboard.rdvList',['listrdv'=>$liste]);
+
+
+        }
+        $liste=Array();
+        $data=Rdvs::select()->where('state','=','PENDING')
+        ->where('dateRdv','>=', Date('Y-m-d'))
+        ->where('rdvs.pmeId','!=',null)
+        ->orWhere('rdvs.clientSimpleDcId','!=',null)
+        ->join('client_s_d_c_s','client_s_d_c_s.id','=','rdvs.clientSimpleDcId')
+        ->select('rdvs.*','client_s_d_c_s.nomPrenom','client_s_d_c_s.tel1','client_s_d_c_s.tel2','client_s_d_c_s.niveauDiplome','client_s_d_c_s.localisation','client_s_d_c_s.ancienNouveau')
+        ->get();
+
+        $data1=Rdvs::select()->where('state','=','PENDING')
+        ->where('dateRdv','>=', Date('Y-m-d'))
+        ->where('rdvs.pmeId','!=',null)
+        ->orWhere('rdvs.clientSimpleDcId','!=',null)
+        ->join('pmes','pmes.id','=','rdvs.pmeId')
+        ->select('rdvs.*','pmes.nom','pmes.nomProprietaire','pmes.numeroProprietaire','pmes.emailProprietaire','pmes.besoinenfinancement')
+        ->get();
+        array_push($liste,$data);
+        array_push($liste,$data1);
+
+
+      //dd($liste);
+        return view('dashboard.rdvList',['listrdv'=>$liste]);
+    }
+
+    public function transfertDossierGeneral(Request $request){
+        $observations=$request->observations;
+        $idDossier=$request->idDossier;
+        $validation='AG';
+        DossierGeneral::where('id',$idDossier)->update(['analysteName'=>Auth::user()->name,'observations'=>$observations,'transmission'=>$validation]);
+        return redirect('/dashboard/dossierGeneral/');
     }
 
 

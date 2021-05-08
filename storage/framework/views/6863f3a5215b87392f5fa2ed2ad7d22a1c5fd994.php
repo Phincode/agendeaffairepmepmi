@@ -133,6 +133,16 @@
                             <input name="dateCreation" type="date" class="form-control datetimepicker"  type="text">
                         </div>    
                     </div>
+                    <div class="form-group">
+                        <label>Besoin <span class="text-danger">*</span></label>
+                        <input name="besoin" type="text" class="form-control "  type="text">
+    
+                    </div>
+                    <div class="form-group">
+                        <label>Localisation <span class="text-danger">*</span></label>
+                        <input name="localisation" type="text" class="form-control "  type="text">
+    
+                    </div>
                     <input name="filledUserId" type="hidden" class="form-control datetimepicker" value="<?php echo e(Auth::user()->id); ?> "  type="text">
                     <input name="codePme" type="hidden" class="form-control datetimepicker" value="<?php echo e($uuid); ?> "  type="text">
                     <div class="submit-section">
@@ -166,6 +176,41 @@
                             <option value="<?php echo e($item->id); ?> "><?php echo e($item->nom); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Chargez les fichiers <span class="text-danger">*</span></label>
+                        <input type="file"  name="filenames[]" multiple  class="form-control">
+                    </div>
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add entreprise dossier Modal -->
+
+<!-- Add dossier Modal by analyste -->
+<div id="add_dossierAn" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Soumettre un dossier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="<?php echo e(route('adDossierAn')); ?>" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
+                    <div class="form-group">
+                        <label>Nom dossier <span class="text-danger">*</span></label>
+                        <input type="text"  name="nomDossier" multiple  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Observation<span class="text-danger">*</span></label>
+                        <input type="text"  name="observations" multiple  class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Chargez les fichiers <span class="text-danger">*</span></label>

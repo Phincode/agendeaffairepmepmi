@@ -35,7 +35,9 @@ class AddPmeRequest extends FormRequest
           'dateCreation'=>"required",
           'codePme'=>"nullable",
           'typePme'=>"required|integer",
-          'filledUserId'=>"required|integer"
+          'filledUserId'=>"required|integer",
+          'besoin'=>'required',
+          'localisation'=>'required'
         ];
     }
 }

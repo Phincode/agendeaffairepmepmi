@@ -24,6 +24,8 @@ class Pme extends Migration
             $table->string('numeroGerant');
             $table->string('activite');
             $table->string('dateCreation');
+            $table->string('localisation');
+            $table->string('besoinenfinancement');
             $table->string('codePme');
             $table->integer('typePme')->constrained('TypePme','id')
                                         ->onUpdate('cascade')

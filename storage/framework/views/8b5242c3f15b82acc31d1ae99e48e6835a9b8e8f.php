@@ -25,6 +25,8 @@
 
 <!-- Main CSS -->
 <link rel="stylesheet" href="<?php echo e(asset('dashboard/css/style.css')); ?>">
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="<?php echo e(asset('dashboard/css/dataTables.bootstrap4.min.css')); ?>">
 
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

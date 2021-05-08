@@ -13,8 +13,8 @@
                         <li><a data-toggle="modal" data-target="#add_dossier" href="#">Soumettre un dossier</a></li>
                         <li><a href="<?php echo e(route('retourAnalyste')); ?> ">Retour Analyste</a></li>
                         
-                        <li><a href="#">Retour Financement</a></li>
-                        <li><a href="#">Dossier rejetés</a></li>
+                        <li><a href="<?php echo e(route('retourAccordBanque')); ?> ">Retour Financement</a></li>
+                        <li><a href="<?php echo e(route('retourBanqueRejet')); ?> ">Dossier rejetés</a></li>
                     </ul>
                  </li>
                  <?php endif; ?>
@@ -39,22 +39,25 @@
                     <ul style="display: none;">
                         <li><a href="<?php echo e(route('analyste')); ?> ">Dossiers</a></li>
                         
+                        <li><a data-toggle="modal" data-target="#add_dossierAn" href="#">Soumettre un dossier</a></li>
+                        <li><a href="<?php echo e(route('dossierGeneral')); ?> ">Dossiers retournés</a></li>
                     </ul>
+                   
                  </li>
                   <?php endif; ?>
                  <?php endif; ?>
                 
                 
-                <?php if(Auth::user()->hasrole('AG')): ?>
+                <?php if(Auth::user()->hasrole('AG')||Auth::user()->hasrole('SC') ): ?>
                 <li class="submenu">
-                    <a href="#"><i class="la la-files-o"></i> <span> Utilisateurs </span> <span class="menu-arrow"></span></a>
+                    <a href=""><i class="la la-files-o"></i> <span>Demandeur</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="estimates.html">Créer un utilisateur</a></li>
-                        <li><a href="invoices.html">Liste des utilisateurs</a></li>
-                        <li><a href="payments.html">Ajouter un role</a></li>
+                        <li><a href="<?php echo e(route('rdvlist')); ?>">Voir la liste</a></li>
                     </ul>
                 </li>
                 <?php endif; ?>
+
+                
                 
                 
         </div>

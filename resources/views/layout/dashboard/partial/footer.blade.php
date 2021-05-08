@@ -15,5 +15,9 @@
 <script src="{{asset('dashboard/plugins/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('dashboard/js/chart.js')}} "></script>
 
+<!-- Datatable JS -->
+<script src="{{asset('dashboard/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('dashboard/js/dataTables.bootstrap4.min.js')}}"></script>
+
 <!-- Custom JS -->
 <script src="{{asset('dashboard/js/app.js')}}"></script>

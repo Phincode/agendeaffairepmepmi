@@ -13,8 +13,8 @@
                         <li><a data-toggle="modal" data-target="#add_dossier" href="#">Soumettre un dossier</a></li>
                         <li><a href="{{route('retourAnalyste')}} ">Retour Analyste</a></li>
                         {{-- <li><a href="employee-dashboard.html">Retour Commité de décision</a></li> --}}
-                        <li><a href="#">Retour Financement</a></li>
-                        <li><a href="#">Dossier rejetés</a></li>
+                        <li><a href="{{route('retourAccordBanque')}} ">Retour Financement</a></li>
+                        <li><a href="{{route('retourBanqueRejet')}} ">Dossier rejetés</a></li>
                     </ul>
                  </li>
                  @endif
@@ -57,7 +57,10 @@
                     <ul style="display: none;">
                         <li><a href="{{route('analyste')}} ">Dossiers</a></li>
                         {{-- <li><a href="holidays.html">Dossier à revoir</a></li> --}}
+                        <li><a data-toggle="modal" data-target="#add_dossierAn" href="#">Soumettre un dossier</a></li>
+                        <li><a href="{{route('dossierGeneral')}} ">Dossiers retournés</a></li>
                     </ul>
+                   
                  </li>
                   @endif
                  @endif
@@ -78,7 +81,16 @@
                 <li class="menu-title"> 
                     <span>HR</span>
                 </li> --}}
-                @if (Auth::user()->hasrole('AG'))
+                @if (Auth::user()->hasrole('AG')||Auth::user()->hasrole('SC') )
+                <li class="submenu">
+                    <a href=""><i class="la la-files-o"></i> <span>Demandeur</span> <span class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li><a href="{{route('rdvlist')}}">Voir la liste</a></li>
+                    </ul>
+                </li>
+                @endif
+
+                {{-- @if (Auth::user()->hasrole('AG'))
                 <li class="submenu">
                     <a href="#"><i class="la la-files-o"></i> <span> Utilisateurs </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
@@ -87,7 +99,7 @@
                         <li><a href="payments.html">Ajouter un role</a></li>
                     </ul>
                 </li>
-                @endif
+                @endif --}}
                 {{-- @if (Auth::user()->hasrole('Banque')|| Auth::user()->hasrole('AG'))
                 <li class="submenu">
                     <a href="#"><i class="la la-user"></i> <span> Partenaires externe</span> <span class="menu-arrow"></span></a>

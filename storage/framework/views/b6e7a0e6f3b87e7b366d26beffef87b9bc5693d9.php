@@ -15,5 +15,9 @@
 <script src="<?php echo e(asset('dashboard/plugins/raphael/raphael.min.js')); ?>"></script>
 <script src="<?php echo e(asset('dashboard/js/chart.js')); ?> "></script>
 
+<!-- Datatable JS -->
+<script src="<?php echo e(asset('dashboard/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(asset('dashboard/js/dataTables.bootstrap4.min.js')); ?>"></script>
+
 <!-- Custom JS -->
 <script src="<?php echo e(asset('dashboard/js/app.js')); ?>"></script><?php /**PATH /Applications/Ampps/www/agendeaffairepmepmi/resources/views/layout/dashboard/partial/footer.blade.php ENDPATH**/ ?>

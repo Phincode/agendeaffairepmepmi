@@ -58,10 +58,10 @@
                             <?php if($currentPme!=0): ?>
                             <br>
                             <div class="">
-                                <?php if(Auth::user()->hasrole('AG')||Auth::user()->hasrole('RAN') ): ?>
+                                <?php if(Auth::user()->hasrole('RAN') ): ?>
                                 <button data-toggle="modal" data-target="#deleguer"  class="btn btn-primary submit-btn">Deleguer</button>
-                                <?php endif; ?>
                                 <button  data-toggle="modal" data-target="#scoring" class="btn btn-success submit-btn">Scorer</button>
+                                <?php endif; ?>
                             </div>
                             <?php endif; ?>
                             

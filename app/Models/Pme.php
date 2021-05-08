@@ -25,6 +25,8 @@ class Pme extends Model
         'numeroGerant',
         'activite',
         'dateCreation',
+        'localisation',
+        'besoinenfinancement',
         'codePme',
         'typePme',
         'filledUserId'

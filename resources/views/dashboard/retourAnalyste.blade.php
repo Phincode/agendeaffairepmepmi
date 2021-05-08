@@ -21,22 +21,20 @@
 
 
             <div class="submit-section">
-                <a href="{{route('rAnalyste',['iddossier'=>$Pme->id])}} " class="btn btn-primary submit-btn" >Voir le dossier</a>
+                <a href="{{route('rAnalyste',['iddossier'=>$Pme->pmeId])}} " class="btn btn-primary" >Voir le dossier</a>
             </div>
-            
-           
                 <div class="submit-section">
                     <Button onclick="getpmeId({{$Pme->pmeId}})" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
             
             <form action="" method="post">
                 <div class="submit-section">
-                    <Button type="submit" class="btn btn-primary submit-btn" >Retourner</Button>
+                    <Button type="submit" class="btn btn-primary" >Retourner</Button>
                 </div>
             </form>
             <form action="" method="post">
                 <div class="submit-section">
-                    <Button type="submit" class="btn btn-primary submit-btn">Rejeté</Button>
+                    <Button type="submit" class="btn btn-primary">Rejeté</Button>
                 </div>
             </form>
         </div>

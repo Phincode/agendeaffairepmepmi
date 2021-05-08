@@ -60,10 +60,10 @@
                             @if ($currentPme!=0)
                             <br>
                             <div class="">
-                                @if (Auth::user()->hasrole('AG')||Auth::user()->hasrole('RAN') )
+                                @if (Auth::user()->hasrole('RAN') )
                                 <button data-toggle="modal" data-target="#deleguer"  class="btn btn-primary submit-btn">Deleguer</button>
-                                @endif
                                 <button  data-toggle="modal" data-target="#scoring" class="btn btn-success submit-btn">Scorer</button>
+                                @endif
                             </div>
                             @endif
                             
