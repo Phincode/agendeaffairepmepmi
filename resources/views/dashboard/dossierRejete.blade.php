@@ -26,7 +26,7 @@
             <div class="small text-muted">Date:{{$Pme->created_at}} </div>
 
 
-
+            
             <div class="submit-section">
                 <a href="{{route('rAnalyste',['iddossier'=>$Pme->pmeId])}} " class="btn btn-primary" >Voir le dossier</a>
             </div>
@@ -37,11 +37,13 @@
                 <div class="submit-section">
                     <Button onclick="getpmeId({{$Pme->pmeId}})" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
-            <form action="" method="post">
-                <div class="submit-section">
-                    <Button type="submit" class="btn btn-primary" >Retirer le dossier</Button>
-                </div>
-            </form>
+                <form action="{{route('dossierDel')}} " method="POST">
+                    @csrf
+                    <div class="submit-section">
+                        <input type="hidden"  name="pmeId" value="{{$Pme->pmeId}} "   class="form-control">
+                        <Button type="submit" class="btn btn-primary">Suprimer le dossier</Button>
+                    </div>
+                </form>
             {{-- <form action="" method="post">
                 <div class="submit-section">
                     <Button type="submit" class="btn btn-primary">Rejeté</Button>

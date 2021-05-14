@@ -32,6 +32,11 @@ class Dashboard extends Controller
         $this->middleware('auth');
     }
 
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/');
+      }
+
     public function index(Request $request){
         //Get pmeType liste
         $pmeTypeList=TypePme::all();
@@ -72,9 +77,25 @@ class Dashboard extends Controller
         
         $req=Pme::select()->where('id',$pmeID)->first();
         //dd($req);
+        if($req==null){
+            return back()->with('error','Pme non trouvé');
+        }
         $v=Role::select()->where('name','RAN')->first();
-
+        $state='ANALYSE1';
+       if(Auth::check()==false){
+           //utilisateur non authentifié
+        $v=Role::select()->where('name','AG')->first();
+        $state='ANALYSE';
+       }
         $npme=$req->nom;
+       //on vérifie si un dossier n'existe pas déjà
+       $checking=DossierPme::select()->where('pmeId',$pmeID)->get();
+      // dd($checking);
+       if(sizeof($checking)!=0){
+        return back()->with('error','Un dossier existe déjà pour cette Pme');
+       }
+
+
         foreach($images as $image) {
             $name = time().'_'.$image->getClientOriginalName();
             $path = $image->storeAs('uploads/'.$npme, $name, 'public');
@@ -84,7 +105,7 @@ class Dashboard extends Controller
             $dossierPme->pmeId=$pmeID;
             $dossierPme->docPath=$path2;
             $dossierPme->validation=$v->id;
-            $dossierPme->etat="ANALYSE1";
+            $dossierPme->etat=$state;
             $dossierPme->nomFichier=$image->getClientOriginalName();
             $dossierPme->save();
             //var_dump($path2);
@@ -93,6 +114,24 @@ class Dashboard extends Controller
         return back()->with('succes','dossier ajouté!');
 
     }
+
+    public function sendDossierToRanalyste(Request $request)
+    {
+        $v=Role::select()->where('name','RAN')->first();
+        $state='ANALYSE1';
+        $pmeId=$request->pmeId;
+        DossierPme::where('pmeId',$pmeId)->update(['etat'=>$state,'validation'=>$v->id]);
+        PmeScoring::where('pmeId',$pmeId)->delete();
+        return redirect('/dashboard/index')->with('succes','Dossier transmis!');  
+      }
+    
+    public function delDossier(Request $request)
+      {
+          $pmeId=$request->pmeId;
+          DossierPme::where('pmeId',$pmeId)->delete();
+          PmeScoring::where('pmeId',$pmeId)->delete();
+          return redirect('/dashboard/index')->with('succes','Dossier retiré!');  
+        }  
 
     public function addDossierbyAnalyste(AddDossier $file)
     {
@@ -125,6 +164,42 @@ class Dashboard extends Controller
             //var_dump($path2);
         }
         return back()->with('succes','dossier ajouté!');
+
+    }
+
+    //new dossier to check and transfert 
+    public function newDossiercreate(Request $request)
+    {
+        //get pme to analyse
+        $dossierpme=DossierPme::select('pmeId')    
+                                        ->where('validation',1)
+                                        ->where('etat','ANALYSE')
+                                        ->distinct()
+                                        ->get(); 
+        //echo($dossierpme->first->pmeId); 
+        $pmeList=Array();
+        foreach ($dossierpme as $key => $value) {
+           $data=Pme::Where('id',$value['pmeId'])->first();
+           array_push($pmeList,$data);
+        } 
+        
+        $pmeFiles=Array();
+
+        //selection des analystes
+        $analysteList=User::select()->Where('role_id',2)->get();
+        
+        if($request->iddossier!=null){
+            $iddossier=intval($request->iddossier);
+            array_push($pmeFiles,DossierPme::select()->Where('pmeId',$iddossier)->get());
+            $pmeName=Pme::select('nom')->where('id', $iddossier)->first();
+            return view('dashboard.nouveauDossier',['listPmetoScore'=>$pmeList,'pmeFiles'=>$pmeFiles[0],'currentPme'=>intval($request->iddossier),'currentPmeName'=>$pmeName->nom,'ListeAnalyste'=>$analysteList]);
+
+        }
+        
+        //dd($request->iddossier);
+        //dd($pmeFiles[0]);
+
+        return view('dashboard.nouveauDossier',['listPmetoScore'=>$pmeList,'pmeFiles'=>[],'currentPme'=>0,'currentPmeName'=>"",'ListeAnalyste'=>$analysteList]);
 
     }
 
@@ -165,6 +240,10 @@ class Dashboard extends Controller
         return view('dashboard.rAnalyste',['listPmetoScore'=>$pmeList,'pmeFiles'=>[],'currentPme'=>0,'currentPmeName'=>"",'ListeAnalyste'=>$analysteList]);
 
     }
+
+
+
+
 
     public function dossierGeneral(Request $request)
     {
@@ -295,7 +374,7 @@ class Dashboard extends Controller
             $transfert->to=0;
             $transfert->pmeId=$data['pmId'];
             $transfert->from=0;
-            $transfert->etape=3;
+            $transfert->etape=4;
             $transfert->Observation='RAS';
             $transfert->save();
         }
@@ -345,7 +424,6 @@ class Dashboard extends Controller
     public function rdvListCreate(Request $request)
     {
         $liste=Array();
-        
         if($request->date!=null){
             //dd($request->date);
             $time = strtotime($request->date);
@@ -370,22 +448,22 @@ class Dashboard extends Controller
         }
         $liste=Array();
         $data=Rdvs::select()->where('state','=','PENDING')
-        ->where('dateRdv','>=', Date('Y-m-d'))
-        ->where('rdvs.pmeId','!=',null)
-        ->orWhere('rdvs.clientSimpleDcId','!=',null)
+        //->where('dateRdv','>=', Date('Y-m-d'))
+        ->where('rdvs.clientSimpleDcId','!=',null)
         ->join('client_s_d_c_s','client_s_d_c_s.id','=','rdvs.clientSimpleDcId')
         ->select('rdvs.*','client_s_d_c_s.nomPrenom','client_s_d_c_s.tel1','client_s_d_c_s.tel2','client_s_d_c_s.niveauDiplome','client_s_d_c_s.localisation','client_s_d_c_s.ancienNouveau')
-        ->get();
+        ->orderBy('rdvs.dateRdv','DESC')
+        ->paginate(3);
 
         $data1=Rdvs::select()->where('state','=','PENDING')
-        ->where('dateRdv','>=', Date('Y-m-d'))
+       // ->where('dateRdv','>=', Date('Y-m-d'))
         ->where('rdvs.pmeId','!=',null)
-        ->orWhere('rdvs.clientSimpleDcId','!=',null)
         ->join('pmes','pmes.id','=','rdvs.pmeId')
         ->select('rdvs.*','pmes.nom','pmes.nomProprietaire','pmes.numeroProprietaire','pmes.emailProprietaire','pmes.besoinenfinancement')
-        ->get();
-        array_push($liste,$data);
-        array_push($liste,$data1);
+        ->orderBy('rdvs.dateRdv','DESC')
+        ->paginate(3);
+        array_push($liste,$data);// pro list
+        array_push($liste,$data1);// pme pmi list
 
 
       //dd($liste);

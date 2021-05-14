@@ -25,13 +25,18 @@
                     <Button onclick="getpmeId(<?php echo e($Pme->pmeId); ?>)" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
             
-            <form action="" method="post">
+            <form action="<?php echo e(route('transfertdossierRanalyste')); ?>" method="post">
+                <?php echo csrf_field(); ?>
                 <div class="submit-section">
+                    <input type="hidden"  name="pmeId" value="<?php echo e($Pme->pmeId); ?> "   class="form-control">
                     <Button type="submit" class="btn btn-primary" >Retourner</Button>
                 </div>
             </form>
-            <form action="" method="post">
+
+            <form action="<?php echo e(route('dossierDel')); ?> " method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="submit-section">
+                    <input type="hidden"  name="pmeId" value="<?php echo e($Pme->pmeId); ?> "   class="form-control">
                     <Button type="submit" class="btn btn-primary">Rejeté</Button>
                 </div>
             </form>

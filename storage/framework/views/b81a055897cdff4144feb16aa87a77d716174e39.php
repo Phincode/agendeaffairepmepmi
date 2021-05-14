@@ -11,8 +11,8 @@
                     <ul style="display: none;">
                         <li><a class="" data-toggle="modal" data-target="#add_leave" href="#">Ajouter une pme</a></li>
                         <li><a data-toggle="modal" data-target="#add_dossier" href="#">Soumettre un dossier</a></li>
+                        <li><a href="<?php echo e(route('newdossier')); ?> ">Nouveau dossier pme</a></li>
                         <li><a href="<?php echo e(route('retourAnalyste')); ?> ">Retour Analyste</a></li>
-                        
                         <li><a href="<?php echo e(route('retourAccordBanque')); ?> ">Retour Financement</a></li>
                         <li><a href="<?php echo e(route('retourBanqueRejet')); ?> ">Dossier rejetés</a></li>
                     </ul>

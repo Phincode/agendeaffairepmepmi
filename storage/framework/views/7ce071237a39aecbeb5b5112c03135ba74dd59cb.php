@@ -24,7 +24,7 @@
             <div class="small text-muted">Date:<?php echo e($Pme->created_at); ?> </div>
 
 
-
+            
             <div class="submit-section">
                 <a href="<?php echo e(route('rAnalyste',['iddossier'=>$Pme->pmeId])); ?> " class="btn btn-primary" >Voir le dossier</a>
             </div>
@@ -33,11 +33,13 @@
                 <div class="submit-section">
                     <Button onclick="getpmeId(<?php echo e($Pme->pmeId); ?>)" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
-            <form action="" method="post">
-                <div class="submit-section">
-                    <Button type="submit" class="btn btn-primary" >Retirer le dossier</Button>
-                </div>
-            </form>
+                <form action="<?php echo e(route('dossierDel')); ?> " method="POST">
+                    <?php echo csrf_field(); ?>
+                    <div class="submit-section">
+                        <input type="hidden"  name="pmeId" value="<?php echo e($Pme->pmeId); ?> "   class="form-control">
+                        <Button type="submit" class="btn btn-primary">Suprimer le dossier</Button>
+                    </div>
+                </form>
             
         </div>
     </div>

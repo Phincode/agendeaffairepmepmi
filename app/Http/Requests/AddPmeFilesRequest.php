@@ -24,7 +24,7 @@ class AddPmeFilesRequest extends FormRequest
     public function rules()
     {
         return [
-            'Pme'=>"required|integer",
+            'Pme'=>"required",
             'filenames'=>"required"
         ];
     }

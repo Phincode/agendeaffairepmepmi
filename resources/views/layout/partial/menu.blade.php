@@ -1,7 +1,7 @@
 <div id="navbar-top">
     <nav class="navbar navbar-expand-md navbar-light bg-white fixed">
         <div class="container">
-            <a class="navbar-brand nav-external" href=" {{route('home')}} "> <img style="height: 70px;" src="{{asset('home/img/logo.png')}} "> </a>
+            <a class="navbar-brand nav-external" href=" {{route('home')}} "> <img style="height:70px;" src="{{asset('home/img/logo.png')}} " alt="Brainstorming agence d'affaire logo"> <span class="offset-xl-2 d-none d-lg-inline d-xl-inline" style="text-align: center;color:grey"> Agence d'Affaires PME-PMI</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -22,17 +22,17 @@
                         {{-- <a href="https://plus.google.com" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a> --}}
                     
                         @if (Auth::check())
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('dashboardView')}}">Dashboard</a>
+                        <li class="nav-item navbar-brand">
+                            <a class="nav-link" href="{{route('dashboardView')}}" style=" margin-top:5px; text-transform:none; text-align: center;color:grey">Dashboard</a>
                          </li>
                         @else
-                           <li class="nav-item">
-                              <a class="nav-link" href="{{route('loginview')}} ">Connexion</a>
+                           <li class="nav-item navbar-brand">
+                              <a class="nav-link" href="{{route('loginview')}}" style="  margin-top:5px; text-transform:none; text-align: center;color:grey">Connexion</a>
                            </li> 
                         @endif
                         
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Apropos de nous</a>
+                    <li class="nav-item navbar-brand">
+                        <a class="nav-link" href="#" style=" margin-top:5px; text-transform:none; text-align: center;color:grey">Apropos de nous</a>
                     </li>
                 </ul>
                 

@@ -11,7 +11,7 @@
 <h3>List des PME à contacter</h3><br><br>
 <!-- Search Filter -->
 <div class="row filter-row">
-    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+    {{-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
          <div class="form-group form-focus">
              <div class="">
                  <input class="form-control" id='date' type="date">
@@ -20,14 +20,14 @@
      </div>
     <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
          <a href="#" class="btn btn-success btn-block"> Rechercher </a>  
-    </div>     
+    </div>      --}}
  </div>
  <!-- /Search Filter -->
  
  <div class="row" style="overflow-y: scroll;">
      <div class="col-md-12">
          <div class="table-responsive">
-             <table class="table table-striped custom-table mb-0 datatable">
+             <table class="table table-striped custom-table first mb-0 ">
                  <thead>
                      <tr style="background-color:yellow">
                          <th>Nom</th>
@@ -90,6 +90,8 @@
                      
                  </tbody>
              </table>
+             <br>
+             {{$listrdv[1]->links()}}
          </div>
      </div>
  </div>
@@ -100,7 +102,7 @@
     <h3>List des Personnes individuelle à contacter</h3><br><br>
     <!-- Search Filter -->
     <div class="row filter-row">
-        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+        {{-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
              <div class="form-group form-focus">
                  <div class="cal-icon">
                      <input class="form-control floating datetimepicker" type="text">
@@ -110,14 +112,14 @@
          </div>
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
              <a href="#" class="btn btn-success btn-block"> Rechercher </a>  
-        </div>     
+        </div>      --}}
      </div>
      <!-- /Search Filter -->
      
      <div class="row" style="overflow-y: scroll;">
          <div class="col-md-12">
              <div class="table-responsive">
-                 <table class="table table-striped custom-table mb-0 datatable">
+                 <table class="table table-striped custom-table second mb-0 ">
                      <thead >
                          <tr style="background-color: coral">
                              <th>Nom</th>
@@ -184,6 +186,7 @@
                      </tbody>
                  </table>
              </div>
+             {{$listrdv[0]->links()}}
          </div>
      </div>
     </div>
@@ -344,5 +347,16 @@
             console.log(id);
              $('#rdvId').val(id);
             }
+    $(document).ready(function () {
+      $('.first').DataTable({
+        "bPaginate": false,
+      });
+      $('.second').DataTable({
+        "bPaginate": false, 
+      })           
+          
+     });
+
+          
 </script>    
 @endsection

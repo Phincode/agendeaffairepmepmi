@@ -4,9 +4,9 @@ Version: 1.0
 By: Hasan Alibegic, hasan461@gmail.com
 License: Apache License v2.0
 */
-
+@import url('http://fonts.cdnfonts.com/css/nexa-bold?styles=29919');
 body {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: 'Nexa', sans-serif;
     padding: 0 auto;
     margin: 0;
 }
@@ -17,8 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 300;
-    letter-spacing: -.02rem;
+    font-family: 'Nexa', sans-serif;
 }
 
 *,
@@ -29,6 +28,7 @@ h6 {
 a {
     color: #2d2d2d;
     cursor: pointer;
+    font-family: 'Nexa', sans-serif;
 }
 
 a:hover,
@@ -62,6 +62,8 @@ a:focus {
     -moz-transition: all .2s;
     -ms-transition: all .2s;
     transition: all .2s;
+    font-family: 'Nexa', sans-serif;
+
 }
 
 .btn-blue {
@@ -167,12 +169,10 @@ a:focus {
 .navbar-light .navbar-brand {
     font-weight: 600;
     color: #666;
-    text-transform: uppercase;
 }
 
 .navbar-light .navbar-nav .nav-link {
-    font-weight: 600;
-    text-transform: uppercase;
+
 }
 
 .navbar-light .navbar-nav .active > .nav-link,
@@ -197,11 +197,15 @@ a:focus {
 .page {
     position: relative;
     overflow: hidden;
+    font-family: 'Nexa', sans-serif;
+
 }
 
 .page .content {
     margin-top: 4rem;
     margin-bottom: 4rem;
+    font-family: 'Nexa', sans-serif;
+
 }
 
 .page .content.cover {
@@ -230,16 +234,21 @@ a:focus {
 .page.overlay .content {
     position: relative;
     z-index: 1;
+    font-family: 'Nexa', sans-serif;
+
 }
 
 #home,#home2,#home3,#services {
     padding: 0;
     color: #fff;
-    background-image: url(https://image.freepik.com/photos-gratuite/femme-affaires-afro-americaine-par-fenetre_1303-10869.jpg);
+    background-image: url('https://dgm-industrie.fr/wp-content/uploads/2019/04/Conception-Mecano-Soudee01-1200x645.jpeg');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size:cover;
+    background-position: top left;
     position: relative;
+    font-family: 'Nexa', sans-serif;
+
 
 }
 
@@ -277,7 +286,6 @@ a:focus {
 #portfolio .filters li a {
     color: #999;
     font-weight: 600;
-    text-transform: uppercase;
 }
 
 #portfolio .filters li a:hover,
@@ -324,7 +332,6 @@ a:focus {
     left: 1rem;
     bottom: 1rem;
     color: #fff;
-    text-transform: uppercase;
 }
 
 #portfolio .items li a:hover .overlay {
@@ -470,6 +477,8 @@ a:focus {
     color: #ccc;
     text-align: center;
     background: #233b6f;
+    font-family: 'Nexa', sans-serif;
+
 }
 
 #footer a,
@@ -640,7 +649,6 @@ a:focus {
         padding: 0 12rem;
     }
 }
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
 html,
 body {
@@ -649,7 +657,7 @@ body {
   height: 100%;
   width: 100%; 
   background: #FFF;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Nexa', sans-serif;
   font-weight: 400;
 }
  
@@ -787,7 +795,7 @@ h1.heading {
 	margin: -1.8rem;
 }
 .fa-phone span {
-	background-color: #4099ff;
+	background-color: #ff4040;
 }
 .facebook span {
 	background-color: #3B5998;
@@ -813,7 +821,7 @@ h1.heading {
 	z-index: 10;
 }
 .icon-button .fa-phone {
-	color: #4099ff;
+	color: #ff4040;
 }
 .icon-button .fa-whatsapp {
 	color: #28ad00;
@@ -827,3 +835,21 @@ h1.heading {
 
 
 .modal { overflow: auto !important; }
+
+.option{
+    background-color:rgba(250, 250, 250, 0.2);
+    height: 300px;
+    margin: 10px;
+    font-family: 'Nexa', sans-serif;
+
+    
+
+}
+.option img:hover{
+    opacity: 1;
+    animation: fade 2s linear;
+}
+@keyframes fade {
+    0%,100% { opacity: 0 }
+    50% { opacity: 1 }
+  }

@@ -11,8 +11,8 @@
                     <ul style="display: none;">
                         <li><a class="" data-toggle="modal" data-target="#add_leave" href="#">Ajouter une pme</a></li>
                         <li><a data-toggle="modal" data-target="#add_dossier" href="#">Soumettre un dossier</a></li>
+                        <li><a href="{{route('newdossier')}} ">Nouveau dossier pme</a></li>
                         <li><a href="{{route('retourAnalyste')}} ">Retour Analyste</a></li>
-                        {{-- <li><a href="employee-dashboard.html">Retour Commité de décision</a></li> --}}
                         <li><a href="{{route('retourAccordBanque')}} ">Retour Financement</a></li>
                         <li><a href="{{route('retourBanqueRejet')}} ">Dossier rejetés</a></li>
                     </ul>

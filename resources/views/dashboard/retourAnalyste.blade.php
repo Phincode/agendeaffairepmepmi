@@ -27,13 +27,18 @@
                     <Button onclick="getpmeId({{$Pme->pmeId}})" data-toggle="modal" data-target="#partenaire" id="envoieBank" class="btn btn-primary" >Envoie Banque</Button>
                 </div>
             
-            <form action="" method="post">
+            <form action="{{route('transfertdossierRanalyste')}}" method="post">
+                @csrf
                 <div class="submit-section">
+                    <input type="hidden"  name="pmeId" value="{{$Pme->pmeId}} "   class="form-control">
                     <Button type="submit" class="btn btn-primary" >Retourner</Button>
                 </div>
             </form>
-            <form action="" method="post">
+
+            <form action="{{route('dossierDel')}} " method="POST">
+                @csrf
                 <div class="submit-section">
+                    <input type="hidden"  name="pmeId" value="{{$Pme->pmeId}} "   class="form-control">
                     <Button type="submit" class="btn btn-primary">Rejeté</Button>
                 </div>
             </form>

@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Brainstormingci">
 <meta name="author" content="Brainstormingci">
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="<?php echo e(asset('ico.ico')); ?> ">
 <title>AGENCE AFFAIRE</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" async defer>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" async defer>
@@ -17,7 +17,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <!-- Favicon -->
-<link rel="shortcut icon" type="image/x-icon" href="<?php echo e(asset('dashboard/img/favicon.png')); ?> ">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="<?php echo e(asset('dashboard/css/bootstrap.min.css')); ?>">

@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="header-left">
         <a href="<?php echo e(route('home')); ?> " class="logo">
-            <img src="assets/img/logo.png" width="40" height="40" alt="">
+            <img style="height:50px;width:100px" src="<?php echo e(asset('home/img/logo.png')); ?>" alt="Brainstorming agence d'affaire logo">
         </a>
     </div>
     <!-- /Logo -->
@@ -51,7 +51,7 @@
                 <span><?php echo e(Auth::user()->name); ?> </span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="<?php echo e(route('logout')); ?> ">Logout</a>
             </div>
         </li>
     </ul>

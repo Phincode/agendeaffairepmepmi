@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="header-left">
         <a href="{{route('home')}} " class="logo">
-            <img src="assets/img/logo.png" width="40" height="40" alt="">
+            <img style="height:50px;width:100px" src="{{asset('home/img/logo.png')}}" alt="Brainstorming agence d'affaire logo">
         </a>
     </div>
     <!-- /Logo -->
@@ -263,7 +263,7 @@
                 <span>{{Auth::user()->name}} </span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="{{route('logout')}} ">Logout</a>
             </div>
         </li>
     </ul>
