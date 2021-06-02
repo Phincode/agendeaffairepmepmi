@@ -60,10 +60,13 @@
                             @if ($currentPme!=0)
                             <br>
                             <div class="">
-                                @if (Auth::user()->hasrole('RAN') )
+                                @if (Auth::user()->hasrole('RAN'))
                                 <button data-toggle="modal" data-target="#deleguer"  class="btn btn-primary submit-btn">Deleguer</button>
+                                @endif
+                                @if (Auth::user()->hasrole('RAN')||Auth::user()->hasrole('AS'))
                                 <button  data-toggle="modal" data-target="#scoring" class="btn btn-success submit-btn">Scorer</button>
                                 @endif
+                                <button style="color: white" data-toggle="modal" data-target="#addFile" class="btn btn-warning submit-btn">Ajouter un fichier</button>
                             </div>
                             @endif
                             
@@ -78,11 +81,15 @@
                                                     <div class="dropdown-file">
                                                         <a href="#" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="{{url($files->docPath)}}" class="dropdown-item">View Details</a>
+                                                            <a target="_blank" href="{{url($files->docPath)}}" class="dropdown-item">View Details</a>
                                                             {{-- <a href="#" class="dropdown-item">Download</a> --}}
                                                             {{-- <a href="#" class="dropdown-item">Rename</a> --}}
-                                                            @if (Auth::user()->hasrole('AG'))
-                                                            <a href="#" class="dropdown-item">Delete</a>
+                                                            @if (Auth::user()->hasrole('RAN') ||Auth::user()->hasrole('AS'))
+                                                              <form  action="{{route('dossierFileDel')}}" method="POST">
+                                                                  @csrf
+                                                                  <input required type="hidden" name="docId" value="{{$files->id}}">
+                                                                  <button style="background: none!important;border: none;padding: 0!important;" type="submit">Delete</button>
+                                                              </form>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -90,7 +97,7 @@
                                                         <i class="fa fa-file-pdf-o"></i>
                                                     </div>
                                                     <div class="card-body">
-                                                        <h6><a href="{{url($files->docPath)}} ">{{$files->nomFichier}} </a></h6>
+                                                        <h6><a  target="_blank" href="{{url($files->docPath)}}">{{$files->nomFichier}} </a></h6>
                                                         <span>...</span>
                                                     </div>
                                                     <div class="card-footer">
@@ -468,6 +475,35 @@
     
 </div>
 
+<!-- Add file -->
+<div id="addFile" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter un fichier au dossier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{route('dossierAddFile')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label>Chargez les fichiers <span class="text-danger">*</span></label>
+                        <input type="file"  name="filenames[]" multiple  class="form-control">
+                    </div>
+                    <input type="hidden"  name="pmeId" value="{{$currentPme}}" class="form-control">
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add file -->
+
+
 <!-- Deleguer Modal -->
 <div id="deleguer" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -543,4 +579,6 @@
     </div>
 </div>
 <!-- /scoring Modal -->
+
+
 @endsection

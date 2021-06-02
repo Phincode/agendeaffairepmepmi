@@ -6,49 +6,73 @@
 
 @extends('layout.homeLayout')
 @section('menuoption')
-<section id="home" class="page overlay">
+<section id="home" class="page">
     <div class="container">
-        <div class=" content cover text-center align-content-around ">
-            <br class="d-none d-lg-block d-xl-block">
-            <br class="d-none d-lg-block d-xl-block">
-            <br class="d-none d-lg-block d-xl-block">
-            <br class="d-none d-lg-block d-xl-block">
-            <br class="d-none d-lg-block d-xl-block">
-            <div  class="row">
-                    <div class=" option  col-sm-12 offset-lg-1 col-lg-3 col-md-3">
-                        <div class="col-lg-12">
-                            <br><br>
-                            <a data-toggle="modal" data-target="#add_leave"  role="button"><img class="rounded-circle" src="{{asset('home/img/menuoption/brainstormingsouscription.png')}} " alt="Generic placeholder image" width="200" height="200"></a>
-                            <h2 style="font-family: 'Nexa', sans-serif;">Souscription</h2>
-                          </div>   
-                    </div>
-                
-                <!-- second card-->
-                <div  class=" option col-sm-12 col-lg-3 col-md-3 align-items-center">
-                    <div class="col-lg-12">
-                        <br><br>
-                        <a  href="{{route('souscriptionDossier')}} " role="button"><img class="rounded-circle" src="{{asset('home/img/menuoption/dossier.png')}} " alt="Generic placeholder image" width="200" height="200">
-                         {{-- {{route('decisionFinancement')}} --}}
-                        </a>
-                        <h2  style="font-family: 'Nexa', sans-serif;">Dossier</h2>
-                      </div>  
+        <br><br>
+        <center>
+            <div class="row">
+                <div class="col">
+                    <button  style="padding-left: 20px;padding-right:20px;" type="button" class="btn btn-outline-danger">Conseils</button>
                 </div>
-                
-                <!-- end second card-->
-                <div class=" option col-sm-12 col-lg-3 col-md-3 align-items-center">
-                    <div class="col-lg-12">
-                        <br><br>
-                        <a  href="#" role="button"> <img class="rounded-circle" src="https://i0.wp.com/www.financialafrik.com/wp-content/uploads/2020/12/franccfa.jpg?fit=838%2C476&ssl=1&resize=1280%2C720 " alt="brainstorming agence d'affaire finnancement" width="200" height="200">
-                         {{-- {{route('decisionFinancement')}} --}}
-                        </a>
-                        <h2 style="font-family: 'Nexa', sans-serif;" >Financement</h2>
-                      </div>    
+                <div class="col">
+                    <button style="padding-left: 20px;padding-right:20px;" type="button" class="btn btn-outline-danger">Dossiers</button>
                 </div>
-                <!-- end third-->
+                <div class="col">
+                    <button style="padding-left: 20px;padding-right:20px;" type="button" class="btn btn-outline-danger">Financement</button>
+                </div>
             </div>
-        </div>
+        </center>
     </div>
 </section>
+
+ 
+<div class="option container">
+    <div  class="row">
+        <div class="col-sm-12  col-lg-4 col-md-4">
+            <div class="heading">
+                <h3 style="font-family: 'Century Gothic', sans-serif; ">Prendre Rendez-vous</h3>
+            </div>
+            <center>
+                <div class="corps col-lg-12">
+                    <a data-toggle="modal" data-target="#add_leave"  role="button"><img class="" src="{{asset('home/img/menuoption/rdv.png')}} " alt="Generic placeholder image" width="200" height="200"></a>
+                </div> 
+            </center>  
+        </div>
+    
+    <!-- second card-->
+   
+    <div class="col-sm-12  col-lg-4 col-md-4">
+        <div class="heading">
+            <h3  style="font-family: 'Century Gothic', sans-serif;">Deposer votre dossier</h3>
+        </div>
+        <center>
+            <div class="corps col-lg-12">
+                <a data-toggle="modal" data-target="#add_dossier" href="#" role="button"><img class="" src="{{asset('home/img/menuoption/depotdossier_2.png')}} " alt="Generic placeholder image" width="200" height="200">
+                    {{-- {{route('decisionFinancement')}} --}}
+                    </a>
+            </div> 
+        </center>  
+    </div>
+    <!-- end second card-->
+    
+    <div class="col-sm-12  col-lg-4 col-md-4">
+        <div class="heading">
+            <h3 style="font-family: 'Century Gothic', sans-serif;" >Suivre votre financement</h3>
+        </div>
+        <center>
+            <div class="corps col-lg-12">
+                <a  href="#" role="button"> <img class="" src="{{asset('home/img/menuoption/financement.png')}} " alt="brainstorming agence d'affaire finnancement" width="200" height="200">
+                    {{-- {{route('decisionFinancement')}} --}}
+                    </a>
+            </div> 
+        </center>  
+    </div>
+    <!-- end third-->
+</div>  
+    
+    
+
+</div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -63,12 +87,12 @@
            <div class="container">
             <div class="row  align-items-center">
                 <div class="col-6 align-items-center">
-                    <a  data-dismiss="modal" data-toggle="modal" data-target="#add_leave" href="#" role="button"><img class="rounded-circle" src="https://freepikpsd.com/wp-content/uploads/2019/10/entreprise-icon-png-1-Transparent-Images.png" alt="Generic placeholder image" width="100" height="100">
+                    <a  data-dismiss="modal" data-toggle="modal" data-target="#add_leave" href="#" role="button"><img class="rounded-circle" src="" alt="Generic placeholder image" width="100" height="100">
                     </a>
                     <h3>Entreprise</h3>
                 </div> 
                 <div class="col-6 align-items-center">
-                    <a  data-dismiss="modal" data-toggle="modal" data-target="#personal" href="#" role="button"><img class="rounded-circle" src="https://www.wiomsa.org/wp-content/uploads/2019/08/personnel-icon.png" alt="Generic placeholder image" width="100" height="100">
+                    <a  data-dismiss="modal" data-toggle="modal" data-target="#personal" href="#" role="button"><img class="rounded-circle" src="" alt="Generic placeholder image" width="100" height="100">
                     </a>
                     <h3>Personnel</h3>
                 </div> 
@@ -262,6 +286,37 @@
     </div>
 </div>
 
+<!-- Add dossier Modal -->
+<div id="add_dossier" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Soumettre un dossier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{route('adDossier')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label>Code PME <span class="text-danger">*</span></label>
+                        <input required name="Pme" type="text" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label>Chargez les fichiers <span class="text-danger">*</span></label>
+                        <input required type="file"  name="filenames[]" multiple  class="form-control">
+                    </div>
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add entreprise dossier Modal -->
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     
@@ -289,24 +344,24 @@
           $('#typepme').change(function(){
             $('#retirer').remove();
               if($('#typepme').val()==1){
-                $('#alertbesoin').append("<p id='retirer'>Votre besoin de financement doit etre compris entre 10 - 50 million de FCFA</p>");
+                $('#alertbesoin').append("<p id='retirer'>Votre besoin de financement doit etre compris entre 10 - 100 millions de FCFA</p>");
                  besoin1=50000000;
               }
               if($('#typepme').val()==2){
                 //$('#besoin').val('50-100');
-                $('#alertbesoin').append("<p id='retirer' >Votre besoin de financement peut etre compris entre 50 - 100 million de FCFA</p>");
+                $('#alertbesoin').append("<p id='retirer' >Votre besoin de financement peut etre compris entre 100 - 500 millions de FCFA</p>");
                 besoin1=100000000;
               }
               if($('#typepme').val()==3){
                 //$('#besoin').val('100+');
-                $('#alertbesoin').append("<p id='retirer' >Votre besoin de financement peut etre de plus de 100 000000 FCFA</p>");
+                $('#alertbesoin').append("<p id='retirer' >Votre besoin de financement peut etre de plus de 500 millions FCFA</p>");
                 besoin1=100000000;
 
 
               }
               if($('#typepme').val()==4){
                 //$('#besoin').val('5-10');
-                $('#alertbesoin').append("<p id='retirer'>Votre besoin de financement peut etre compris entre 5 et 10 million  FCFA</p>");
+                $('#alertbesoin').append("<p id='retirer'>Votre besoin de financement peut etre compris entre 5 et 10 millions  FCFA</p>");
                 besoin1=10000000;
 
             }

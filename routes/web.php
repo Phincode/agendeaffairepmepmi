@@ -26,6 +26,8 @@ Route::group(['middleware'=>['web']],function(){
         $typepme=TypePme::select()->get();
         return view('home/index',['pmeTypeList'=>$typepme]);
     })->name('home');
+    
+    Route::post('/addpmedossiers',[Dashboard::class,'addDossier'])->name('adDossier');
 
 
 
@@ -46,11 +48,8 @@ Route::group(['middleware'=>['web']],function(){
 
         Route::group(['prefix'=>'/dashboard'],function(){
         Route::get('/index',[Dashboard::class,'index'])->name('dashboardView');
-
         Route::get('/logout',[Dashboard::class,'logout'])->name('logout');//logout
-
         Route::post('/addpme',[Dashboard::class,'addPme'])->name('addPME');
-        Route::post('/addpmedossiers',[Dashboard::class,'addDossier'])->name('adDossier');
         Route::post('/addDossierAnalyste',[Dashboard::class,'addDossierbyAnalyste'])->name('adDossierAn');
         Route::get('/dossierGeneral/{iddossier?}',[Dashboard::class,'dossierGeneral'])->name('dossierGeneral');
         Route::get('/ranlyste/{iddossier?}',[Dashboard::class,'ranalystecreate'])->name('rAnalyste');
@@ -72,6 +71,11 @@ Route::group(['middleware'=>['web']],function(){
         Route::group(['middleware'=>'hasrole:AG'],function (){
             Route::post('/dossierDel}',[Dashboard::class,'delDossier'])->name('dossierDel');
         });
+        Route::post('/dossierFileDel}',[Dashboard::class,'delFile'])->name('dossierFileDel');
+        Route::post('/dossierAddFile}',[Dashboard::class,'addFiles'])->name('dossierAddFile');
+
+        
+
 
 
 
@@ -91,4 +95,5 @@ Route::post('/checkDate',[Rdv::class,'checkTimeForRdv'])->name('checkT');
 Route::post('/takeappointment',[Rdv::class,'takeAppointment'])->name('takeApoint');
 //free route
 Route::post('/takeappointmentPerso',[Rdv::class,'particulerTakeAppointment'])->name('particuliertakeApoint');
+
 

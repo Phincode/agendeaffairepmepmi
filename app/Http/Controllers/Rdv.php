@@ -18,19 +18,19 @@ class Rdv extends Controller
           $date=$request->input('date');
           //$lastrdv=Rdvs::select()->where('dateRdv',$date)->orderBy('id','desc')->first();
           $number=Rdvs::select()->where('dateRdv',$date)->where('horaire',1)->count();
-          if($number<20){
+          if($number<1){
             return json_encode(['error'=>false,'data'=>[1,2,3,4]]);
           }
           $number=Rdvs::select()->where('dateRdv',$date)->where('horaire',2)->count();
-          if($number<20){
+          if($number<1){
             return json_encode(['error'=>false,'data'=>[2,3,4]]);
           }
           $number=Rdvs::select()->where('dateRdv',$date)->where('horaire',3)->count();
-          if($number<20){
+          if($number<1){
             return json_encode(['error'=>false,'data'=>[3,4]]);
           }
           $number=Rdvs::select()->where('dateRdv',$date)->where('horaire',4)->count();
-          if($number<20){
+          if($number<1){
             return json_encode(['error'=>false,'data'=>[4]]);
           }else{
             return json_encode(['error'=>false,'data'=>[0]]);

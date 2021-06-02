@@ -4,11 +4,12 @@ Version: 1.0
 By: Hasan Alibegic, hasan461@gmail.com
 License: Apache License v2.0
 */
-@import url('http://fonts.cdnfonts.com/css/nexa-bold?styles=29919');
+@import url('http://fonts.cdnfonts.com/css/century-gothic');
 body {
-    font-family: 'Nexa', sans-serif;
-    padding: 0 auto;
-    margin: 0;
+    font-family: 'Century Gothic', sans-serif; 
+       padding: 0 auto;
+       margin: 0;
+       background-color: white;
 }
 
 h1,
@@ -17,8 +18,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Nexa', sans-serif;
-}
+    font-family: 'Century Gothic', sans-serif;}
 
 *,
 *:focus {
@@ -28,7 +28,7 @@ h6 {
 a {
     color: #2d2d2d;
     cursor: pointer;
-    font-family: 'Nexa', sans-serif;
+    font-family: 'Century Gothic', sans-serif;
 }
 
 a:hover,
@@ -62,8 +62,7 @@ a:focus {
     -moz-transition: all .2s;
     -ms-transition: all .2s;
     transition: all .2s;
-    font-family: 'Nexa', sans-serif;
-
+    font-family: 'Century Gothic', sans-serif;
 }
 
 .btn-blue {
@@ -171,9 +170,7 @@ a:focus {
     color: #666;
 }
 
-.navbar-light .navbar-nav .nav-link {
 
-}
 
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .active > .nav-link:hover,
@@ -187,7 +184,6 @@ a:focus {
 }
 
 .navbar-light.fixed {
-    position: fixed;
     top: 0;
     z-index: 99;
     width: 100%;
@@ -197,19 +193,17 @@ a:focus {
 .page {
     position: relative;
     overflow: hidden;
-    font-family: 'Nexa', sans-serif;
-
+    font-family: 'Century Gothic', sans-serif;
 }
 
 .page .content {
-    margin-top: 4rem;
+   
     margin-bottom: 4rem;
-    font-family: 'Nexa', sans-serif;
-
+    font-family: 'Century Gothic', sans-serif;
 }
 
 .page .content.cover {
-    margin-top: 8rem;
+  
     margin-bottom: 8rem;
 }
 
@@ -234,21 +228,18 @@ a:focus {
 .page.overlay .content {
     position: relative;
     z-index: 1;
-    font-family: 'Nexa', sans-serif;
-
+    font-family: 'Century Gothic', sans-serif;
 }
+
 
 #home,#home2,#home3,#services {
     padding: 0;
     color: #fff;
-    background-image: url('https://dgm-industrie.fr/wp-content/uploads/2019/04/Conception-Mecano-Soudee01-1200x645.jpeg');
+    background-image: url('../img/cover/background.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size:cover;
-    background-position: top left;
-    position: relative;
-    font-family: 'Nexa', sans-serif;
-
+    background-size: cover;
+    height: 450px;
 
 }
 
@@ -477,8 +468,7 @@ a:focus {
     color: #ccc;
     text-align: center;
     background: #233b6f;
-    font-family: 'Nexa', sans-serif;
-
+    font-family: 'Century Gothic', sans-serif;
 }
 
 #footer a,
@@ -656,9 +646,9 @@ body {
        box-sizing: border-box;
   height: 100%;
   width: 100%; 
-  background: #FFF;
-  font-family: 'Nexa', sans-serif;
-  font-weight: 400;
+  background:white;
+  font-family: 'Century Gothic', sans-serif;
+    font-weight: 400;
 }
  
 .wrapper {
@@ -836,20 +826,132 @@ h1.heading {
 
 .modal { overflow: auto !important; }
 
-.option{
-    background-color:rgba(250, 250, 250, 0.2);
-    height: 300px;
-    margin: 10px;
-    font-family: 'Nexa', sans-serif;
 
-    
-
-}
-.option img:hover{
-    opacity: 1;
-    animation: fade 2s linear;
-}
 @keyframes fade {
     0%,100% { opacity: 0 }
     50% { opacity: 1 }
   }
+
+  .brand{
+    background-color: grey;
+    height: 50px;
+   padding-top: 10px;
+   color: white;
+}
+
+.btn-outline-danger:hover{
+   background-color: red;
+   color: white;
+}
+
+.corps{
+    border: #00aced solid;
+    margin-top: 10px;
+    align-items: center;
+}
+.heading{
+    
+    text-align: center;
+    height: 40px;
+    background-color: #00aced;
+    color: white;
+    margin-top: 10px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+   
+    .option{
+        margin-top: -10rem;
+    }
+    body {
+        font-family: 'Century Gothic', sans-serif;
+        padding: 0 auto;
+        margin: 0;
+        height: 100%;
+        background-color:white;
+    }
+    
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+   
+    .option{
+        margin-top: -10rem;
+    }
+    body {
+        font-family: 'Century Gothic', sans-serif;
+        padding: 0 auto;
+        margin: 0;
+        height: 100%;
+        background-color: white;
+    }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+   
+    .option{
+        margin-top: -10rem;
+    }
+    body {
+        font-family: 'Century Gothic', sans-serif;
+        padding: 0 auto;
+        margin: 0;
+        height: 100%;
+        background-color: white;
+    }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    #footer2{
+        color: white;
+        position:absolute;
+        bottom:0;
+        width:100%;
+        font-size: small;
+        font-family: 'Century Gothic', sans-serif;
+
+    }
+    .option{
+        margin-top: -10rem;
+    }
+    body {
+        font-family: 'Century Gothic', sans-serif;
+        padding: 0 auto;
+        margin: 0;
+        height: 100%;
+        background-color: white;
+    }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    #footer2{
+        color: white;
+        position:absolute;
+        bottom:0;
+        width:100%;
+        font-size: small;
+        font-family: 'Century Gothic', sans-serif;
+
+    }
+    .option{
+        margin-top: -10rem;
+    }
+    body {
+        font-family: 'Century Gothic', sans-serif;
+        padding: 0 auto;
+        margin: 0;
+        height: 100%;
+        background-color: white;
+    }
+
+}

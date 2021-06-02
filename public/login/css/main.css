@@ -30,7 +30,7 @@ body, html {
 }
 
 /*---------------------------------------------*/
-a {
+/* a {
 	font-family: Ubuntu-Regular;
 	font-size: 14px;
 	line-height: 1.7;
@@ -49,20 +49,20 @@ a:focus {
 a:hover {
 	text-decoration: none;
   color: #403866;
-}
+} */
 
 /*---------------------------------------------*/
 h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
 }
 
-p {
+/* p {
 	font-family: Ubuntu-Regular;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
 	margin: 0px;
-}
+} */
 
 ul, li {
 	margin: 0px;
@@ -137,7 +137,6 @@ iframe {
 
 .container-login100 {
   width: 100%;  
-  min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;

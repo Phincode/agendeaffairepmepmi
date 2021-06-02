@@ -24,12 +24,16 @@ use App\Models\DossierGeneral;
 use App\Models\FichierDossierGeneral;
 use Illuminate\Support\Facades\Date;
 use App\Models\Rdvs;
+use App\Service\mailing;
+
 
 class Dashboard extends Controller
 {
+    
+    
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('web');
     }
 
     public function logout(Request $request) {
@@ -46,7 +50,9 @@ class Dashboard extends Controller
         return view('dashboard.dashb',['pmeTypeList'=>$pmeTypeList,'pmeList'=>$pmeList]);
     }
 
-    public function addPme(AddPmeRequest $request ){
+    public function addPme(AddPmeRequest $request )
+    {
+        $mailing=new mailing();
         $data=$request->validated();
         //dd($data);
         
@@ -65,11 +71,22 @@ class Dashboard extends Controller
             $pme->besoinenfinancement=$data['besoin'];
             $pme->localisation=$data['localisation'];
             $pme->save();
+            $pmeId= Pme::select('id')->where('codePme',$data['codePme'])->first();
+            //send notification to pme
+            // $mailing::sendNotification($data['emailProprietaire'],"Votre code PME est le: ".$pmeId->id);
+            // //send notification to AG
+            // $mails=User::select('email')->where('role_id',1)->get();
+            // foreach ($mails as $key => $adress) {
+            //     mailing::sendNotification($adress->email,"Une nouvelle Pme viens de s'enregistrer,le code PME est le: ".$pmeId->id);
+
+            // }
+
             return back()->with('succes','Pme Enregistrée avec succès!');
     }
 
     public function addDossier(AddPmeFilesRequest $file)
     {
+        $mailing=new mailing();
         $data=$file->validated();
         //dd($data);
         $images = $data['filenames'];
@@ -80,6 +97,7 @@ class Dashboard extends Controller
         if($req==null){
             return back()->with('error','Pme non trouvé');
         }
+        $pmeMail=$req->emailProprietaire;
         $v=Role::select()->where('name','RAN')->first();
         $state='ANALYSE1';
        if(Auth::check()==false){
@@ -111,7 +129,42 @@ class Dashboard extends Controller
             //var_dump($path2);
 
         }
+        //$pmeMail
+        //send notification to pme owner
+    //    $mailing::sendNotification($pmeMail,"Nous accusons reception de votre dossier,nous vous ferons un retour incessamment");
+    //     if(Auth::check()==false){
+    //          send notification to AG
+    //         $mails=User::select('email')->where('role_id',1)->get();
+    //         foreach ($mails as $key => $adress) {
+    //            $mailing::sendNotification($adress->email,"Une pme viens de soumettre son dossier, Merci de le consulter dans votre TB");
+    //        }
+    //     }
         return back()->with('succes','dossier ajouté!');
+
+    }
+
+    public function addFiles(Request $request){
+        $files=$request->filenames;
+        $pmeId=$request->pmeId;
+        $npme=Pme::select('nom')->where('id',$pmeId)->get()->first->nom->nom;
+       // var_dump($npme->nom->nom);
+       
+        foreach($files as $file) {
+            $name = time().'_'.$file->getClientOriginalName();
+            $path = $file->storeAs('uploads/'.$npme, $name, 'public');
+            $path2=Storage::url($path);
+            //store
+            $dossierPme=new DossierPme();
+            $dossierPme=new DossierPme();
+            $dossierPme->pmeId=$pmeId;
+            $dossierPme->docPath=$path2;
+            $dossierPme->validation=2;
+            $dossierPme->etat="ANALYSE1";
+            $dossierPme->nomFichier=$file->getClientOriginalName();
+            $dossierPme->save();
+            //var_dump($path2);
+        }
+        return redirect()->back()->with('succes','dossier ajouté!');
 
     }
 
@@ -122,16 +175,29 @@ class Dashboard extends Controller
         $pmeId=$request->pmeId;
         DossierPme::where('pmeId',$pmeId)->update(['etat'=>$state,'validation'=>$v->id]);
         PmeScoring::where('pmeId',$pmeId)->delete();
+         
+        //send notification to RAN
+        //  $mails=User::select('email')->where('role_id',2)->get();
+        //  foreach ($mails as $key => $adress) {
+        //     mailing::sendNotification($adress->email,"Nouveau dossier à analyser dans votre TB");
+        // }
         return redirect('/dashboard/index')->with('succes','Dossier transmis!');  
       }
     
     public function delDossier(Request $request)
-      {
+    {
           $pmeId=$request->pmeId;
           DossierPme::where('pmeId',$pmeId)->delete();
           PmeScoring::where('pmeId',$pmeId)->delete();
           return redirect('/dashboard/index')->with('succes','Dossier retiré!');  
-        }  
+    }  
+
+    public function delFile(Request $request)
+    {
+        $docId=$request->docId;
+        DossierPme::where('id',$docId)->delete();
+        return redirect('/dashboard/index')->with('succes','Fichier  retiré!');  
+      } 
 
     public function addDossierbyAnalyste(AddDossier $file)
     {
@@ -163,6 +229,12 @@ class Dashboard extends Controller
               $fichiers->save();
             //var_dump($path2);
         }
+        
+        //send notification to RAN
+        // $mails=User::select('email')->where('role_id',1)->get();
+        // foreach ($mails as $key => $adress) {
+        //            mailing::sendNotification($adress->email,"Un analyste viens de vous transmettre un  dossier à analyser dans votre TB CAPITAL");
+        //        }
         return back()->with('succes','dossier ajouté!');
 
     }
@@ -226,7 +298,6 @@ class Dashboard extends Controller
         $analysteList=User::select()->Where('role_id',3)->get();
         
         if($request->iddossier!=null){
-            
             $iddossier=intval($request->iddossier);
             array_push($pmeFiles,DossierPme::select()->Where('pmeId',$iddossier)->get());
             $pmeName=Pme::select('nom')->where('id', $iddossier)->first();
@@ -279,7 +350,13 @@ class Dashboard extends Controller
         $transfert->etape=3;
         $transfert->Observation=$data['observation'];
         $transfert->save();
+         //send notification to RAN
+        //  $mails=User::select('email')->where('id',$data['analysteId'])->get();
+        //  foreach ($mails as $key => $adress) {
+        //     mailing::sendNotification($adress->email,"Votre responsable viens de vous soumettre un dossier à analyser");
+        // }
         return redirect('/dashboard/index');
+
     }
 
     public function analystecreate(Request $request)
@@ -307,7 +384,12 @@ class Dashboard extends Controller
                                     ->update(['etat'=>'ANALYSE2','validation'=>'4']);
 
         DossierPmeTransfert::where('pmeId',$data['pmeId'])  
-                                    ->update(['etape'=>4]);                          
+                                    ->update(['etape'=>4]); 
+        
+        // $mails=User::select('email')->where('role_id',1)->get();
+        //     foreach ($mails as $key => $adress) {
+        //             mailing::sendNotification($adress->email,"Un nouveau dossier est disponible dans votre TB option: Retour Analyste");
+        //             }                            
         
         return redirect('/dashboard/index');
 
@@ -475,6 +557,10 @@ class Dashboard extends Controller
         $idDossier=$request->idDossier;
         $validation='AG';
         DossierGeneral::where('id',$idDossier)->update(['analysteName'=>Auth::user()->name,'observations'=>$observations,'transmission'=>$validation]);
+        // $mails=User::select('email')->where('role_id',1)->get();
+        //     foreach ($mails as $key => $adress) {
+        //             mailing::sendNotification($adress->email,"Un nouveau dossier est disponible dans votre TB CAPITAL");
+        //             }   
         return redirect('/dashboard/dossierGeneral/');
     }
 

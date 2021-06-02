@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="<?php echo e(asset('login/images/icons/favicon.ico')); ?> "/>
 <!--===============================================================================================-->
@@ -23,10 +24,13 @@
 <!--===============================================================================================-->	
 	<link rel="stylesheet" type="text/css" href="<?php echo e(asset('login/vendor/daterangepicker/daterangepicker.css')); ?>">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo e(asset('login/css/util.css')); ?>">
+
+	
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('login/css/util.css')); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo e(asset('login/css/main.css')); ?> ">
+
+	<?php echo $__env->make('layout.partial.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!--===============================================================================================-->
- <?php echo $__env->make('layout.partial.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </head>
 <body>
 	<?php echo $__env->make('layout.partial.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -85,6 +89,17 @@
 	
 
 	<div id="dropDownSelect1"></div>
+
+	<div id="footer2" class="container-fluid align-items-center   brand" style="background-color: rgb(160, 9, 9)">
+        <div class="row">
+            <div class="col-12  text-center ">
+                <div class="center-div">
+                    Plus de 20 ans d’expériences au service du Financement des PME-PMI en Côte d’Ivoire 
+                </div>
+
+            </div>
+        </div>
+   </div>
 	
 <!--===============================================================================================-->
 	<script src="<?php echo e(asset('login/vendor/jquery/jquery-3.2.1.min.js')); ?> "></script>
@@ -123,21 +138,21 @@
         ga('create','UA-25089888-9');ga('send','pageview');
     </script>
     <script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
+// /* When the user clicks on the button, 
+// toggle between hiding and showing the dropdown content */
+// function myFunction() {
+//   document.getElementById("myDropdown").classList.toggle("show");
+// }
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
-    }
-  }
-}
+// // Close the dropdown if the user clicks outside of it
+// window.onclick = function(e) {
+//   if (!e.target.matches('.dropbtn')) {
+//   var myDropdown = document.getElementById("myDropdown");
+//     if (myDropdown.classList.contains('show')) {
+//       myDropdown.classList.remove('show');
+//     }
+//   }
+// }
 </script>
 
 </body>
