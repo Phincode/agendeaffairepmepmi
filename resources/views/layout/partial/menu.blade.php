@@ -9,14 +9,14 @@
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="https://facebook.com" class="nav-link icon-button whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                        <a target="_blank" href="https://api.whatsapp.com/send?phone=2250788823753" class="nav-link icon-button whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
                     </li> 
                     
                     <li class="nav-item">
-                        <a href="https://facebook.com" class="nav-link icon-button facebook"><i class="icon-facebook"></i></a>
+                        <a target="_blank" href="https://www.facebook.com/Agence-daffaires-pme-pmi-107162248224913" class="nav-link icon-button facebook"><i class="icon-facebook"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://twitter.com/minimalmonkey" class="nav-link icon-button"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                        <a target="_blank" href="tel:+2250788823753" class="nav-link icon-button"><i class="fa fa-phone" aria-hidden="true"></i></a>
                     </li>
                        
                         {{-- <a href="https://plus.google.com" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a> --}}
